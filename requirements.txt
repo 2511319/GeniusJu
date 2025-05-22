@@ -1,0 +1,13 @@
+dash
+dash_bootstrap_components
+fastapi
+uvicorn
+gunicorn
+httpx
+openai
+python-dotenv
+pandas
+jinja2
+pydantic
+google-cloud-firestore
+PyYAML
