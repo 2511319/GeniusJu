@@ -1,3 +1,46 @@
-{{ ohlc_data | tojson | default([]) }}
+OHLCV и Технические Индикаторы (рассчитаны с учетом пользовательских параметров для некоторых из них):
+{{ ohlc_data_with_indicators | tojson(indent=2) | default([]) }}
 
-Тебе переданы данные в формате JSON о свечах и значениях индикаторов...
+Пользовательские параметры для ключевых индикаторов (если не указано, использованы стандартные для этих 6):
+RSI Период: {{ user_indicator_params.rsi_period | default('14 (стандарт)') }}
+MACD Периоды (быстрый, медленный, сигнал): {{ user_indicator_params.macd_fast_period | default('12') }}, {{ user_indicator_params.macd_slow_period | default('26') }}, {{ user_indicator_params.macd_signal_period | default('9 (стандарт)') }}
+Bollinger Bands Период/StdDev: {{ user_indicator_params.bb_period | default('20') }} / {{ user_indicator_params.bb_std_dev | default('2.0 (стандарт)') }}
+Stochastic Oscillator Периоды (K, D, Сглаживание): {{ user_indicator_params.stoch_k_period | default('14') }}, {{ user_indicator_params.stoch_d_period | default('3') }}, {{ user_indicator_params.stoch_slowing_period | default('3 (стандарт)') }}
+ATR Период: {{ user_indicator_params.atr_period | default('14 (стандарт)') }}
+Ichimoku Cloud Периоды (Tenkan, Kijun, Senkou B): {{ user_indicator_params.ichi_tenkan_period | default('9') }}, {{ user_indicator_params.ichi_kijun_period | default('26') }}, {{ user_indicator_params.ichi_senkou_b_period | default('52 (стандарт)') }}
+
+Тебе переданы данные в формате JSON о свечах (OHLCV) и значениях рассчитанных технических индикаторов (в ключе 'ohlc_data_with_indicators').
+Также тебе предоставлены параметры, которые пользователь мог изменить для 6 ключевых индикаторов (RSI, MACD, Bollinger Bands, Stochastic, ATR, Ichimoku), перечисленные выше.
+Остальные индикаторы (ADX, Williams %R, Parabolic SAR, VWAP, Moving Average Envelopes, OBV) рассчитаны со стандартными параметрами.
+Твоя задача - провести технический анализ на основе ВСЕХ этих данных.
+Обрати внимание на значения индикаторов, особенно тех, параметры которых мог задать пользователь.
+Твои выводы должны быть основаны на тех значениях индикаторов, которые предоставлены в 'ohlc_data_with_indicators'.
+
+Пожалуйста, предоставь свои выводы в формате JSON следующей структуры:
+{
+  "overall_summary": "Краткое общее резюме анализа на 2-3 предложения.",
+  "key_observations": [
+    {"title": "Название наблюдения 1 (например, Анализ RSI)", "text": "Текст наблюдения 1, детализирующий его значение и контекст."},
+    {"title": "Название наблюдения 2", "text": "Текст наблюдения 2."}
+  ],
+  "potential_risks": [
+    "Описание потенциального риска 1.",
+    "Описание потенциального риска 2."
+  ],
+  "recommendations": [
+    {"type": "buy | sell | hold | info", "confidence": "high | medium | low | none", "text": "Текст рекомендации 1, объясняющий ее основания."},
+    {"type": "buy | sell | hold | info", "confidence": "high | medium | low | none", "text": "Текст рекомендации 2."}
+  ],
+  "price_prediction_comment": "(Опционально) Твой комментарий по поводу возможности прогноза цены, если он был запрошен или уместен."
+}
+
+Если ты не можешь строго следовать этому JSON формату, пожалуйста, используй четкие Markdown заголовки для каждой из этих секций: 
+## Общее резюме
+## Ключевые наблюдения
+(Для каждого наблюдения используй ### Название наблюдения)
+## Потенциальные риски
+## Рекомендации
+(Для каждой рекомендации указывай Тип: [buy/sell/hold/info] и Уверенность: [high/medium/low], если применимо)
+## Комментарий по прогнозу цены (опционально)
+
+Твой анализ должен быть объективным и основываться исключительно на предоставленных данных OHLCV, индикаторов и пользовательских параметров.

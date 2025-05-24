@@ -1,4 +1,4 @@
-dash
+dash>=2.0.0
 dash_bootstrap_components
 fastapi
 uvicorn
@@ -11,3 +11,6 @@ jinja2
 pydantic
 google-cloud-firestore
 PyYAML
+google-cloud-secret-manager
+pandas-ta
+diskcache
